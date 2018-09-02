@@ -1,8 +1,6 @@
-# Twib
+# ruby-twib
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/twib`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+[Twili](https://github.com/misson20000/twili) bridge client for Ruby, providing a way for Ruby applications to send requests to a Twili device via twibd.
 
 ## Installation
 
@@ -22,7 +20,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+See the instructions on the [Twili repository](https://github.com/misson20000/twili#twili) for how to set up Twili and twibd.
+
+First, create a Twib::TwibConnection. There is a convenience method `Twib::TwibConnection::connect_unix`
+```ruby
+> tc = Twib::TwibConnection.connect_unix
+ => #<Twib::TwibConnection:...>
+```
+
+After that, you can list the available devices with `TwibConnection#list_devices`, which returns an array of hashes identifying each device.
+```ruby
+> tc.list_devices
+[{"device_id"=>507914862, ...}, ...]
+```
+
+Use `TwibConnection#open_device` to get a device's `ITwibDeviceInterface`.
+```ruby
+> tc.open_device(507914862)
+ => #<Twib::Interfaces::ITwibDeviceInterface:...>
+```
 
 ## Development
 
@@ -32,4 +48,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/twib.
+Bug reports and pull requests are welcome on GitHub at https://github.com/misson20000/ruby-twib.

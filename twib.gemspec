@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["misson20000"]
   spec.email         = ["xenotoad@xenotoad.net"]
 
-  spec.summary       = "Ruby bindings for Twili bridge"
+  spec.summary       = "Twili bridge client for Ruby"
   spec.homepage      = "https://github.com/misson20000/ruby-twib/"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
