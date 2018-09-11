@@ -72,9 +72,9 @@ module Twib
       end
 
       # Gets a thread's context.
-      # @return [self]
+      # @return [String]
       def get_thread_context(thread_id)
-        raise "nyi"
+        send(Command::GET_THREAD_CONTEXT, [thread_id].pack("Q<")).wait_ok.payload
       end
 
       # Breaks the target process.
