@@ -41,7 +41,9 @@ module Twib
       # @param size [Integer] How many bytes to read
       # @return [String]
       def read_memory(addr, size)
-        send(Command::READ_MEMORY, [addr, size].pack("Q<Q<")).wait_ok.payload
+        response = send(Command::READ_MEMORY, [addr, size].pack("Q<Q<")).wait_ok.payload
+        length = response.unpack("Q<")[0]
+        return response[8, length]
       end
 
       # Writes to process memory at the given address.
@@ -49,7 +51,7 @@ module Twib
       # @param string [String] Data to write
       # @return [String]
       def write_memory(addr, string)
-        send(Command::WRITE_MEMORY, [addr].pack("Q<") + string).wait_ok
+        send(Command::WRITE_MEMORY, [addr, string.bytesize].pack("Q<Q<") + string).wait_ok
         string
       end
 
@@ -87,7 +89,7 @@ module Twib
       # @param flags [Integer] See http://www.switchbrew.org/index.php?title=SVC#ContinueDebugFlagsOld
       # @return [self]
       def continue_debug_event(flags, thread_ids=[])
-        send(Command::CONTINUE_DEBUG_EVENT, ([flags] + thread_ids).pack("L<Q<*")).wait_ok
+        send(Command::CONTINUE_DEBUG_EVENT, ([flags, thread_ids.length] + thread_ids).pack("L<Q<Q<*")).wait_ok
         self
       end
 
